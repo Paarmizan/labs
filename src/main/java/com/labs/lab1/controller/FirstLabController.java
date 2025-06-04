@@ -12,7 +12,6 @@ public class FirstLabController {
 
     @FXML
     public void initialize() {
-        // Установка значения по умолчанию
         operationComboBox.getSelectionModel().selectFirst();
     }
 
@@ -25,7 +24,7 @@ public class FirstLabController {
                     operationComboBox.getSelectionModel().getSelectedIndex()
             );
 
-            resultLabel.setText(calculator.getResult());
+            resultLabel.setText(calculator.calculate());
         } catch (NumberFormatException e) {
             resultLabel.setText("Ошибка: введите корректные числа");
         } catch (ArithmeticException e) {

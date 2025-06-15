@@ -1,6 +1,6 @@
 package com.labs.lab2.controller;
 
-import com.labs.lab2.model.ExpCalculator;
+import com.labs.lab2.model.TrigCalculator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,9 +16,9 @@ public class SecondLabController {
             double x = Double.parseDouble(numberAField.getText());
             double epsilon = Double.parseDouble(precisionField.getText());
 
-            double result = ExpCalculator.calculate(x, epsilon);
+            double result = TrigCalculator.calculateSin(x, epsilon);
 
-            resultLabel.setText(String.format("e^%.2f ≈ %.10f", x, result));
+            resultLabel.setText(String.format("sin(%.2f) ≈ %.10f", x, result));
         } catch (NumberFormatException e) {
             resultLabel.setText("Ошибка: введите корректные числа");
         } catch (Exception e) {

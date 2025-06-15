@@ -13,11 +13,10 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <!-- Строка 0: Число А -->
+
     <Label text="Число А:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
     <TextField fx:id="numberAField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <!-- Строка 1: Операция -->
     <Label text="Операция:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
     <ComboBox fx:id="operationComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1">
         <items>
@@ -30,16 +29,13 @@
         </items>
     </ComboBox>
 
-    <!-- Строка 2: Число Б -->
     <Label text="Число Б:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <TextField fx:id="numberBField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-    <!-- Строка 3: Кнопка вычисления -->
     <Button text="=" onAction="#actionCalculate"
             GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"
             style="-fx-font-weight: bold;"/>
 
-    <!-- Строка 4: Результат -->
     <Label text="Ответ:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
     <Label fx:id="resultLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"
            style="-fx-font-weight: bold; -fx-text-fill: #2b579a; -fx-font-size: 16;"/>

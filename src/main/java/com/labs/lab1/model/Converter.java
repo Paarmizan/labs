@@ -17,14 +17,14 @@ public class Converter {
 
         switch (operationType) {
             case 0 -> {
-                result = input * 2.54;
-                unitFrom = "дюйм";
-                unitTo = "см";
+                result = input * 1.852;
+                unitFrom = "миль";
+                unitTo = "км";
             }
             case 1 -> {
-                result = input / 2.54;
-                unitFrom = "см";
-                unitTo = "дюйм";
+                result = input / 1.852;
+                unitFrom = "км";
+                unitTo = "миль";
             }
             default -> throw new IllegalArgumentException("Неизвестная операция");
         }

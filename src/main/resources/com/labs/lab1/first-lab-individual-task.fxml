@@ -21,8 +21,8 @@
     <ComboBox fx:id="operationComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1">
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Дюймы → Сантиметры"/>
-                <String fx:value="Сантиметры → Дюймы"/>
+                <String fx:value="Морские мили → Километры"/>
+                <String fx:value="Километры → Морские мили"/>
             </FXCollections>
         </items>
     </ComboBox>

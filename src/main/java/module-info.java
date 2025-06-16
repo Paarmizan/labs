@@ -15,6 +15,4 @@ module com.example.demo {
 
     opens com.labs.lab3 to javafx.fxml, javafx.graphics;
     exports com.labs.lab3;
-    exports com.labs.lab3.controller;
-    opens com.labs.lab3.controller to javafx.fxml, javafx.graphics;
 }

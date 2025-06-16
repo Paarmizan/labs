@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class ThirdLabApplication extends JComponent {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Транспорт");
+        JFrame frame = new JFrame("Лабораторная работа 3");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new ThirdLabApplication());

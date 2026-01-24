@@ -8,8 +8,13 @@
 
     <Pane fx:id="paintPane" prefWidth="400" prefHeight="300"/>
 
-    <CheckBox text="Фары" onAction="#addHeadlights"/>
-    <CheckBox text="Спойлер" onAction="#addSpoiler"/>
+    <CheckBox fx:id="spoilerCheckBox"
+              text="Спойлер"
+              onAction="#onOptionsChanged"/>
+
+    <CheckBox fx:id="headlightsCheckBox"
+              text="Фары"
+              onAction="#onOptionsChanged"/>
 
     <Label fx:id="statusLabel"/>
 </VBox>

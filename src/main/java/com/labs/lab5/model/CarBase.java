@@ -10,7 +10,7 @@ public class CarBase implements VehicleComponent {
     @Override
     public void operation(Pane pane) {
 
-        pane.getChildren().clear(); // чтобы не рисовалась поверх старой
+        pane.getChildren().clear();
 
         // кузов
         Rectangle body = new Rectangle(100, 150, 120, 40);

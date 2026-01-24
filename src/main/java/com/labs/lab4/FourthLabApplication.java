@@ -1,9 +1,5 @@
 package com.labs.lab4;
 
-import com.labs.lab4.model.Bicycle;
-import com.labs.lab4.model.Car;
-import com.labs.lab4.model.Motorcycle;
-import com.labs.lab4.model.Vehicle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

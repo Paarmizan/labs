@@ -17,6 +17,9 @@ public class TTask extends TProjectItem {
     private List<TEmployee> employees = new ArrayList<>();
     private List<TTask> dependencies = new ArrayList<>();
 
+    private LocalDate startDate;
+    private LocalDate finishDate;
+
     public TTask(String name, int workHours, LocalDate deadline) {
         super(name);
         this.workHours = workHours;
@@ -28,21 +31,8 @@ public class TTask extends TProjectItem {
         return workHours;
     }
 
-    public void addEmployee(TEmployee employee) {
-        employees.add(employee);
-        employee.assignTask(this);
-    }
-
-    public void addDependency(TTask task) {
-        dependencies.add(task);
-    }
-
-    public List<TTask> getDependencies() {
-        return dependencies;
-    }
-
-    public List<TEmployee> getEmployees() {
-        return employees;
+    public int getDurationDays() {
+        return (int) Math.ceil(workHours / 8.0);
     }
 
     public Status getStatus() {
@@ -53,32 +43,30 @@ public class TTask extends TProjectItem {
         return deadline;
     }
 
-    public LocalDate calculateFinishDate() {
-
-        // 1️⃣ старт после зависимостей
-        LocalDate startDate = LocalDate.now();
-
-        for (TTask dependency : dependencies) {
-            LocalDate depFinish = dependency.calculateFinishDate();
-            if (depFinish.isAfter(startDate)) {
-                startDate = depFinish;
-            }
-        }
-
-// 2️⃣ старт после освобождения сотрудников (БЕЗ текущей задачи)
-        for (TEmployee employee : employees) {
-            LocalDate freeDate = employee.getAvailableDateExcluding(this);
-            if (freeDate.isAfter(startDate)) {
-                startDate = freeDate;
-            }
-        }
-
-// 3️⃣ длительность только этой задачи
-        int days = (int) Math.ceil(workHours / 8.0);
-        return startDate.plusDays(days);
-
+    public List<TEmployee> getEmployees() {
+        return employees;
     }
 
+    public List<TTask> getDependencies() {
+        return dependencies;
+    }
+
+    public void addEmployee(TEmployee employee) {
+        employees.add(employee);
+    }
+
+    public void addDependency(TTask task) {
+        dependencies.add(task);
+    }
+
+    public void setSchedule(LocalDate startDate) {
+        this.startDate = startDate;
+        this.finishDate = startDate.plusDays(getDurationDays());
+    }
+
+    public LocalDate getFinishDate() {
+        return finishDate;
+    }
 
     @Override
     public String toString() {

@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectController implements Initializable {
@@ -23,47 +22,38 @@ public class ProjectController implements Initializable {
     public TextField nameField;
     public TextField hoursField;
     public DatePicker deadlinePicker;
+
     public ListView<TEmployee> employeeSelectList;
     public ListView<TTask> dependencyList;
-
-
 
     public ListView<TEmployee> employeeList;
     public Label resultLabel;
 
-
     private javafx.collections.ObservableList<TTask> tasks;
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        // колонки
-        nameCol.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleStringProperty(d.getValue().getName()));
-        hoursCol.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getWorkHours()));
-        statusCol.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getStatus()));
-        deadlineCol.setCellValueFactory(d ->
-                new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getDeadline()));
+        nameCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getName()));
+        hoursCol.setCellValueFactory(d -> new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getWorkHours()));
+        statusCol.setCellValueFactory(d -> new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getStatus()));
+        deadlineCol.setCellValueFactory(d -> new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getDeadline()));
+
         employeesCol.setCellValueFactory(d ->
                 new javafx.beans.property.SimpleStringProperty(
                         d.getValue().getEmployees().stream()
                                 .map(TEmployee::getName)
                                 .reduce((a, b) -> a + ", " + b)
                                 .orElse("—")
-                )
-        );
+                ));
+
         depsCol.setCellValueFactory(d ->
                 new javafx.beans.property.SimpleStringProperty(
                         d.getValue().getDependencies().stream()
                                 .map(TTask::getName)
                                 .reduce((a, b) -> a + ", " + b)
                                 .orElse("—")
-                )
-        );
-
+                ));
 
         // тестовые данные
         TEmployee e1 = new TEmployee("Иван");
@@ -84,18 +74,14 @@ public class ProjectController implements Initializable {
 
         employeeSelectList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dependencyList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         employeeSelectList.setItems(employeeList.getItems());
         dependencyList.setItems(tasks);
     }
 
     public void calculateProject() {
-
-        LocalDate finishDate = tasks.stream()
-                .map(TTask::calculateFinishDate)
-                .max(LocalDate::compareTo)
-                .orElse(LocalDate.now());
-
-        resultLabel.setText("Дата завершения проекта: " + finishDate);
+        LocalDate finish = ProjectScheduler.calculateProjectFinish(tasks);
+        resultLabel.setText("Дата завершения проекта: " + finish);
     }
 
     public void addTask() {
@@ -104,11 +90,7 @@ public class ProjectController implements Initializable {
         String hoursText = hoursField.getText();
         LocalDate deadline = deadlinePicker.getValue();
 
-        if (name == null || name.isBlank()
-                || hoursText == null || hoursText.isBlank()
-                || deadline == null) {
-            return;
-        }
+        if (name.isBlank() || hoursText.isBlank() || deadline == null) return;
 
         int hours;
         try {
@@ -119,22 +101,11 @@ public class ProjectController implements Initializable {
 
         TTask task = new TTask(name, hours, deadline);
 
-        // 🔹 назначаем исполнителей
-        for (TEmployee e : employeeSelectList.getSelectionModel().getSelectedItems()) {
-            task.addEmployee(e);
-        }
-
-        // 🔹 добавляем зависимости
-        for (TTask dep : dependencyList.getSelectionModel().getSelectedItems()) {
-            task.addDependency(dep);
-        }
+        task.getEmployees().addAll(employeeSelectList.getSelectionModel().getSelectedItems());
+        task.getDependencies().addAll(dependencyList.getSelectionModel().getSelectedItems());
 
         tasks.add(task);
 
-        // обновляем список зависимостей
-        dependencyList.refresh();
-
-        // очистка формы
         nameField.clear();
         hoursField.clear();
         deadlinePicker.setValue(null);
@@ -143,21 +114,10 @@ public class ProjectController implements Initializable {
     }
 
     public void removeTask() {
-
         TTask selected = taskTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            return;
-        }
+        if (selected == null) return;
 
-        // убираем зависимость у других задач
-        for (TTask task : tasks) {
-            task.getDependencies().remove(selected);
-        }
-
-        for (TEmployee e : selected.getEmployees()) {
-            e.removeTask(selected);
-        }
-
+        tasks.forEach(t -> t.getDependencies().remove(selected));
         tasks.remove(selected);
     }
 }

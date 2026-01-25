@@ -14,4 +14,9 @@ module com.example.demo {
 
     opens com.labs.lab5.controller to javafx.fxml;
     exports com.labs.lab5;
+
+    exports com.labs.courseProject;
+    opens com.labs.courseProject to javafx.graphics;
+
+    opens com.labs.courseProject.controller to javafx.fxml;
 }

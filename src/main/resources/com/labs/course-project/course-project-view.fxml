@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.labs.courseProject.controller.ProjectController">
+
+    <!-- Верх -->
+    <top>
+        <Label text="Модель учета задач и ресурсов"
+               style="-fx-font-size: 18px; -fx-padding: 10;" />
+    </top>
+
+    <!-- Центр -->
+    <center>
+        <SplitPane dividerPositions="0.6">
+
+            <!-- Таблица задач -->
+            <VBox spacing="5">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Задачи"/>
+                <TableView fx:id="taskTable">
+                    <columns>
+                        <TableColumn text="Название" fx:id="nameCol"/>
+                        <TableColumn text="Часы" fx:id="hoursCol"/>
+                        <TableColumn text="Статус" fx:id="statusCol"/>
+                        <TableColumn text="Дедлайн" fx:id="deadlineCol"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Сотрудники -->
+            <VBox spacing="5">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+
+                <Label text="Сотрудники"/>
+                <ListView fx:id="employeeList"/>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+    <!-- Низ -->
+    <bottom>
+        <HBox spacing="15">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Button text="Рассчитать дату завершения"
+                    onAction="#calculateProject"/>
+            <Label fx:id="resultLabel" text="Дата завершения проекта: —"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

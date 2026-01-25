@@ -15,7 +15,7 @@ public class CourseProjectApplication extends Application {
                 )
         );
 
-        Scene scene = new Scene(loader.load(), 900, 600);
+        Scene scene = new Scene(loader.load(), 1500, 600);
 
         stage.setTitle("Course Project — Учет задач и ресурсов");
         stage.setScene(scene);

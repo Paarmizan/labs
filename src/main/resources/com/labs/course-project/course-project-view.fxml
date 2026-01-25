@@ -30,6 +30,8 @@
                         <TableColumn text="Часы" fx:id="hoursCol"/>
                         <TableColumn text="Статус" fx:id="statusCol"/>
                         <TableColumn text="Дедлайн" fx:id="deadlineCol"/>
+                        <TableColumn text="Исполнители" fx:id="employeesCol"/>
+                        <TableColumn text="Зависимости" fx:id="depsCol"/>
                     </columns>
                 </TableView>
             </VBox>
@@ -46,6 +48,33 @@
 
         </SplitPane>
     </center>
+
+    <right>
+        <VBox spacing="8">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Новая задача"/>
+
+            <TextField fx:id="nameField" promptText="Название задачи"/>
+            <TextField fx:id="hoursField" promptText="Трудоемкость (часы)"/>
+            <DatePicker fx:id="deadlinePicker"/>
+            <Label text="Исполнители"/>
+            <ListView fx:id="employeeSelectList" prefHeight="80"/>
+
+            <Label text="Зависимости"/>
+            <ListView fx:id="dependencyList" prefHeight="80"/>
+
+
+            <HBox spacing="10">
+                <Button text="Добавить задачу" onAction="#addTask"/>
+                <Button text="Удалить выбранную" onAction="#removeTask"/>
+            </HBox>
+        </VBox>
+    </right>
+
+
 
     <!-- Низ -->
     <bottom>

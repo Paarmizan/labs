@@ -55,7 +55,7 @@ public class TTask extends TProjectItem {
 
     public LocalDate calculateFinishDate() {
 
-        // 1️⃣ сначала завершаются зависимости
+        // 1️⃣ старт после зависимостей
         LocalDate startDate = LocalDate.now();
 
         for (TTask dependency : dependencies) {
@@ -65,17 +65,23 @@ public class TTask extends TProjectItem {
             }
         }
 
-        // 2️⃣ учитываем загрузку сотрудников
-        int maxWorkload = employees.stream()
-                .mapToInt(TEmployee::getTotalWorkload)
-                .max()
-                .orElse(workHours);
+// 2️⃣ старт после освобождения сотрудников (БЕЗ текущей задачи)
+        for (TEmployee employee : employees) {
+            LocalDate freeDate = employee.getAvailableDateExcluding(this);
+            if (freeDate.isAfter(startDate)) {
+                startDate = freeDate;
+            }
+        }
 
-        int effectiveHours = Math.max(workHours, maxWorkload);
-
-        // 3️⃣ переводим часы в дни (8 часов = 1 день)
-        int days = (int) Math.ceil(effectiveHours / 8.0);
-
+// 3️⃣ длительность только этой задачи
+        int days = (int) Math.ceil(workHours / 8.0);
         return startDate.plusDays(days);
+
+    }
+
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
